@@ -1,0 +1,72 @@
+<div class="resume-edit-component">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Резюме</h2>
+
+    <mat-form-field>
+      <input appCyrillic matInput placeholder="ФИО" formControlName="name">
+
+      <mat-error *ngIf="validator.hasError(form.get('name'))">
+        {{validator.getErrors(form.get('name'))[0]}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-radio-group formControlName="gender">
+      <mat-radio-button [value]="genders?.male">{{genders?.male?.title}}</mat-radio-button>
+      <mat-radio-button [value]="genders?.female">{{genders?.female?.title}}</mat-radio-button>
+
+      <mat-error class="radio-error" *ngIf="validator.hasError(form.get('gender'))">
+        {{validator.getErrors(form.get('gender'))[0]}}
+      </mat-error>
+    </mat-radio-group>
+
+    <mat-form-field>
+      <input readonly matInput placeholder="Дата рождения" formControlName="birthday" [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+
+      <mat-error *ngIf="validator.hasError(form.get('birthday'))">
+        {{validator.getErrors(form.get('birthday'))[0]}}
+      </mat-error>
+    </mat-form-field>
+
+    <ng-container *ngIf="showMaritalStatusField()">
+      <mat-form-field>
+        <mat-select placeholder="Семейное положение" formControlName="maritalStatus">
+          <ng-container *ngFor="let status of maritalStatuses[form.get('gender').value?.alias]">
+            <mat-option [value]="status">{{status.title}}</mat-option>
+          </ng-container>
+        </mat-select>
+
+        <mat-error *ngIf="validator.hasError(form.get('maritalStatus'))">
+          {{validator.getErrors(form.get('maritalStatus'))[0]}}
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <mat-form-field>
+      <input matInput appCounter type="number" placeholder="Количество детей" formControlName="childrenCount" min="0">
+
+      <mat-error *ngIf="validator.hasError(form.get('childrenCount'))">
+        {{validator.getErrors(form.get('childrenCount'))[0]}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email">
+
+      <mat-error *ngIf="validator.hasError(form.get('email'))">
+        {{validator.getErrors(form.get('email'))[0]}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea appCyrillic matInput placeholder="Комментарий" formControlName="comment"></textarea>
+
+      <mat-error *ngIf="validator.hasError(form.get('comment'))">
+        {{validator.getErrors(form.get('comment'))[0]}}
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" [disabled]="disableStateForm">Сохранить</button>
+  </form>
+</div>

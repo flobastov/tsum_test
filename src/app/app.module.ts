@@ -1,16 +1,33 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {registerLocaleData} from '@angular/common';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {ResumeModule} from './pages/resume/resume.module';
+import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
+import localeRu from '@angular/common/locales/ru';
+import {ValidatorService} from './core/services/validator.service';
 
-import { AppComponent } from './app.component';
+registerLocaleData(localeRu);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PageNotFoundComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    ResumeModule,
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+    ValidatorService,
+    {provide: LOCALE_ID, useValue: 'ru'},
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

@@ -1,0 +1,46 @@
+<div class="resume-view-component">
+  <h2>Просмотр резюме</h2>
+
+  <div class="resume-view-component__info">
+    <ng-container *ngIf="user; else empty">
+      <div class="info-field">
+        <div class="info-field__legend">ФИО</div>
+        <p class="info-field__value">{{user.name}}</p>
+      </div>
+
+      <div class="info-field">
+        <div class="info-field__legend">Пол</div>
+        <p class="info-field__value">{{user.gender.title}}</p>
+      </div>
+
+      <div class="info-field">
+        <div class="info-field__legend">Дата рождения</div>
+        <p class="info-field__value">{{user.birthday | date: 'longDate'}}</p>
+      </div>
+
+      <div *ngIf="user.maritalStatus" class="info-field">
+        <div class="info-field__legend">Семейное положение</div>
+        <p class="info-field__value">{{user.maritalStatus.title}}</p>
+      </div>
+
+      <div *ngIf="user.childrenCount" class="info-field">
+        <div class="info-field__legend">Количество детей</div>
+        <p class="info-field__value">{{user.childrenCount}}</p>
+      </div>
+
+      <div class="info-field">
+        <div class="info-field__legend">Email</div>
+        <p class="info-field__value">{{user.email}}</p>
+      </div>
+
+      <div *ngIf="user.comment" class="info-field">
+        <div class="info-field__legend">Комментарий</div>
+        <p class="info-field__value">{{user.comment}}</p>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #empty>
+  Резюме не найдено
+</ng-template>
